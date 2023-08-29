@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 2000;
+            height: 1200;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Aemon-Targaryen-(Maester-Aemon)", "label": "Aemon-Targaryen-(Maester-Aemon)", "shape": "dot", "size": 10}, {"id": "Jeor-Mormont", "label": "Jeor-Mormont", "shape": "dot", "size": 10}, {"id": "Jon-Snow", "label": "Jon-Snow", "shape": "dot", "size": 10}, {"id": "Jaremy-Rykker", "label": "Jaremy-Rykker", "shape": "dot", "size": 10}, {"id": "Tyrion-Lannister", "label": "Tyrion-Lannister", "shape": "dot", "size": 10}, {"id": "Alliser-Thorne", "label": "Alliser-Thorne", "shape": "dot", "size": 10}, {"id": "Arya-Stark", "label": "Arya-Stark", "shape": "dot", "size": 10}, {"id": "Benjen-Stark", "label": "Benjen-Stark", "shape": "dot", "size": 10}, {"id": "Bran-Stark", "label": "Bran-Stark", "shape": "dot", "size": 10}, {"id": "Catelyn-Stark", "label": "Catelyn-Stark", "shape": "dot", "size": 10}, {"id": "Eddard-Stark", "label": "Eddard-Stark", "shape": "dot", "size": 10}, {"id": "Grenn", "label": "Grenn", "shape": "dot", "size": 10}, {"id": "Halder", "label": "Halder", "shape": "dot", "size": 10}, {"id": "Pypar", "label": "Pypar", "shape": "dot", "size": 10}, {"id": "Rickon-Stark", "label": "Rickon-Stark", "shape": "dot", "size": 10}, {"id": "Robb-Stark", "label": "Robb-Stark", "shape": "dot", "size": 10}, {"id": "Robert-Baratheon", "label": "Robert-Baratheon", "shape": "dot", "size": 10}, {"id": "Samwell-Tarly", "label": "Samwell-Tarly", "shape": "dot", "size": 10}, {"id": "Todder", "label": "Todder", "shape": "dot", "size": 10}, {"id": "Aerys-II-Targaryen", "label": "Aerys-II-Targaryen", "shape": "dot", "size": 10}, {"id": "Barristan-Selmy", "label": "Barristan-Selmy", "shape": "dot", "size": 10}, {"id": "Cersei-Lannister", "label": "Cersei-Lannister", "shape": "dot", "size": 10}, {"id": "Daenerys-Targaryen", "label": "Daenerys-Targaryen", "shape": "dot", "size": 10}, {"id": "Jaime-Lannister", "label": "Jaime-Lannister", "shape": "dot", "size": 10}, {"id": "Joffrey-Baratheon", "label": "Joffrey-Baratheon", "shape": "dot", "size": 10}, {"id": "Jon-Arryn", "label": "Jon-Arryn", "shape": "dot", "size": 10}, {"id": "Petyr-Baelish", "label": "Petyr-Baelish", "shape": "dot", "size": 10}, {"id": "Pycelle", "label": "Pycelle", "shape": "dot", "size": 10}, {"id": "Renly-Baratheon", "label": "Renly-Baratheon", "shape": "dot", "size": 10}, {"id": "Rhaegar-Targaryen", "label": "Rhaegar-Targaryen", "shape": "dot", "size": 10}, {"id": "Sansa-Stark", "label": "Sansa-Stark", "shape": "dot", "size": 10}, {"id": "Stannis-Baratheon", "label": "Stannis-Baratheon", "shape": "dot", "size": 10}, {"id": "Tywin-Lannister", "label": "Tywin-Lannister", "shape": "dot", "size": 10}, {"id": "Varys", "label": "Varys", "shape": "dot", "size": 10}, {"id": "Aggo", "label": "Aggo", "shape": "dot", "size": 10}, {"id": "Doreah", "label": "Doreah", "shape": "dot", "size": 10}, {"id": "Drogo", "label": "Drogo", "shape": "dot", "size": 10}, {"id": "Haggo", "label": "Haggo", "shape": "dot", "size": 10}, {"id": "Illyrio-Mopatis", "label": "Illyrio-Mopatis", "shape": "dot", "size": 10}, {"id": "Irri", "label": "Irri", "shape": "dot", "size": 10}, {"id": "Jhiqui", "label": "Jhiqui", "shape": "dot", "size": 10}, {"id": "Jhogo", "label": "Jhogo", "shape": "dot", "size": 10}, {"id": "Jorah-Mormont", "label": "Jorah-Mormont", "shape": "dot", "size": 10}, {"id": "Mirri-Maz-Duur", "label": "Mirri-Maz-Duur", "shape": "dot", "size": 10}, {"id": "Qotho", "label": "Qotho", "shape": "dot", "size": 10}, {"id": "Viserys-Targaryen", "label": "Viserys-Targaryen", "shape": "dot", "size": 10}, {"id": "Alyn", "label": "Alyn", "shape": "dot", "size": 10}, {"id": "Brandon-Stark", "label": "Brandon-Stark", "shape": "dot", "size": 10}, {"id": "Jory-Cassel", "label": "Jory-Cassel", "shape": "dot", "size": 10}, {"id": "Loras-Tyrell", "label": "Loras-Tyrell", "shape": "dot", "size": 10}, {"id": "Luwin", "label": "Luwin", "shape": "dot", "size": 10}, {"id": "Lyanna-Stark", "label": "Lyanna-Stark", "shape": "dot", "size": 10}, {"id": "Lysa-Arryn", "label": "Lysa-Arryn", "shape": "dot", "size": 10}, {"id": "Mordane", "label": "Mordane", "shape": "dot", "size": 10}, {"id": "Tomard", "label": "Tomard", "shape": "dot", "size": 10}, {"id": "Vayon-Poole", "label": "Vayon-Poole", "shape": "dot", "size": 10}, {"id": "Mycah", "label": "Mycah", "shape": "dot", "size": 10}, {"id": "Myrcella-Baratheon", "label": "Myrcella-Baratheon", "shape": "dot", "size": 10}, {"id": "Syrio-Forel", "label": "Syrio-Forel", "shape": "dot", "size": 10}, {"id": "Hodor", "label": "Hodor", "shape": "dot", "size": 10}, {"id": "Nan", "label": "Nan", "shape": "dot", "size": 10}, {"id": "Osha", "label": "Osha", "shape": "dot", "size": 10}, {"id": "Theon-Greyjoy", "label": "Theon-Greyjoy", "shape": "dot", "size": 10}, {"id": "Sandor-Clegane", "label": "Sandor-Clegane", "shape": "dot", "size": 10}, {"id": "Hallis-Mollen", "label": "Hallis-Mollen", "shape": "dot", "size": 10}, {"id": "Rodrik-Cassel", "label": "Rodrik-Cassel", "shape": "dot", "size": 10}, {"id": "Jeyne-Poole", "label": "Jeyne-Poole", "shape": "dot", "size": 10}, {"id": "Brynden-Tully", "label": "Brynden-Tully", "shape": "dot", "size": 10}, {"id": "Walder-Frey", "label": "Walder-Frey", "shape": "dot", "size": 10}, {"id": "Bronn", "label": "Bronn", "shape": "dot", "size": 10}, {"id": "Kevan-Lannister", "label": "Kevan-Lannister", "shape": "dot", "size": 10}, {"id": "Mord", "label": "Mord", "shape": "dot", "size": 10}, {"id": "Shae", "label": "Shae", "shape": "dot", "size": 10}, {"id": "Shagga", "label": "Shagga", "shape": "dot", "size": 10}, {"id": "Vardis-Egen", "label": "Vardis-Egen", "shape": "dot", "size": 10}, {"id": "Ogo", "label": "Ogo", "shape": "dot", "size": 10}, {"id": "Gared", "label": "Gared", "shape": "dot", "size": 10}, {"id": "Waymar-Royce", "label": "Waymar-Royce", "shape": "dot", "size": 10}, {"id": "Will-(prologue)", "label": "Will-(prologue)", "shape": "dot", "size": 10}, {"id": "Gregor-Clegane", "label": "Gregor-Clegane", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "Aemon-Targaryen-(Maester-Aemon)", "label": 13, "to": "Jeor-Mormont", "weight": 13}, {"from": "Aemon-Targaryen-(Maester-Aemon)", "label": 34, "to": "Jon-Snow", "weight": 34}, {"from": "Jeor-Mormont", "label": 11, "to": "Jaremy-Rykker", "weight": 11}, {"from": "Jeor-Mormont", "label": 81, "to": "Jon-Snow", "weight": 81}, {"from": "Jeor-Mormont", "label": 23, "to": "Tyrion-Lannister", "weight": 23}, {"from": "Jon-Snow", "label": 32, "to": "Alliser-Thorne", "weight": 32}, {"from": "Jon-Snow", "label": 37, "to": "Arya-Stark", "weight": 37}, {"from": "Jon-Snow", "label": 41, "to": "Benjen-Stark", "weight": 41}, {"from": "Jon-Snow", "label": 56, "to": "Bran-Stark", "weight": 56}, {"from": "Jon-Snow", "label": 14, "to": "Catelyn-Stark", "weight": 14}, {"from": "Jon-Snow", "label": 38, "to": "Eddard-Stark", "weight": 38}, {"from": "Jon-Snow", "label": 31, "to": "Grenn", "weight": 31}, {"from": "Jon-Snow", "label": 23, "to": "Halder", "weight": 23}, {"from": "Jon-Snow", "label": 45, "to": "Pypar", "weight": 45}, {"from": "Jon-Snow", "label": 11, "to": "Rickon-Stark", "weight": 11}, {"from": "Jon-Snow", "label": 53, "to": "Robb-Stark", "weight": 53}, {"from": "Jon-Snow", "label": 18, "to": "Robert-Baratheon", "weight": 18}, {"from": "Jon-Snow", "label": 81, "to": "Samwell-Tarly", "weight": 81}, {"from": "Jon-Snow", "label": 13, "to": "Todder", "weight": 13}, {"from": "Jon-Snow", "label": 56, "to": "Tyrion-Lannister", "weight": 56}, {"from": "Aerys-II-Targaryen", "label": 12, "to": "Robert-Baratheon", "weight": 12}, {"from": "Robert-Baratheon", "label": 40, "to": "Barristan-Selmy", "weight": 40}, {"from": "Robert-Baratheon", "label": 11, "to": "Bran-Stark", "weight": 11}, {"from": "Robert-Baratheon", "label": 22, "to": "Catelyn-Stark", "weight": 22}, {"from": "Robert-Baratheon", "label": 72, "to": "Cersei-Lannister", "weight": 72}, {"from": "Robert-Baratheon", "label": 11, "to": "Daenerys-Targaryen", "weight": 11}, {"from": "Robert-Baratheon", "label": 291, "to": "Eddard-Stark", "weight": 291}, {"from": "Robert-Baratheon", "label": 24, "to": "Jaime-Lannister", "weight": 24}, {"from": "Robert-Baratheon", "label": 30, "to": "Joffrey-Baratheon", "weight": 30}, {"from": "Robert-Baratheon", "label": 32, "to": "Jon-Arryn", "weight": 32}, {"from": "Robert-Baratheon", "label": 30, "to": "Petyr-Baelish", "weight": 30}, {"from": "Robert-Baratheon", "label": 26, "to": "Pycelle", "weight": 26}, {"from": "Robert-Baratheon", "label": 42, "to": "Renly-Baratheon", "weight": 42}, {"from": "Robert-Baratheon", "label": 22, "to": "Rhaegar-Targaryen", "weight": 22}, {"from": "Robert-Baratheon", "label": 26, "to": "Sansa-Stark", "weight": 26}, {"from": "Robert-Baratheon", "label": 21, "to": "Stannis-Baratheon", "weight": 21}, {"from": "Robert-Baratheon", "label": 18, "to": "Tyrion-Lannister", "weight": 18}, {"from": "Robert-Baratheon", "label": 13, "to": "Tywin-Lannister", "weight": 13}, {"from": "Robert-Baratheon", "label": 36, "to": "Varys", "weight": 36}, {"from": "Aggo", "label": 11, "to": "Daenerys-Targaryen", "weight": 11}, {"from": "Daenerys-Targaryen", "label": 15, "to": "Doreah", "weight": 15}, {"from": "Daenerys-Targaryen", "label": 101, "to": "Drogo", "weight": 101}, {"from": "Daenerys-Targaryen", "label": 12, "to": "Haggo", "weight": 12}, {"from": "Daenerys-Targaryen", "label": 24, "to": "Illyrio-Mopatis", "weight": 24}, {"from": "Daenerys-Targaryen", "label": 25, "to": "Irri", "weight": 25}, {"from": "Daenerys-Targaryen", "label": 26, "to": "Jhiqui", "weight": 26}, {"from": "Daenerys-Targaryen", "label": 17, "to": "Jhogo", "weight": 17}, {"from": "Daenerys-Targaryen", "label": 75, "to": "Jorah-Mormont", "weight": 75}, {"from": "Daenerys-Targaryen", "label": 31, "to": "Mirri-Maz-Duur", "weight": 31}, {"from": "Daenerys-Targaryen", "label": 18, "to": "Qotho", "weight": 18}, {"from": "Daenerys-Targaryen", "label": 37, "to": "Viserys-Targaryen", "weight": 37}, {"from": "Alyn", "label": 11, "to": "Eddard-Stark", "weight": 11}, {"from": "Eddard-Stark", "label": 30, "to": "Arya-Stark", "weight": 30}, {"from": "Eddard-Stark", "label": 28, "to": "Barristan-Selmy", "weight": 28}, {"from": "Eddard-Stark", "label": 19, "to": "Bran-Stark", "weight": 19}, {"from": "Eddard-Stark", "label": 11, "to": "Brandon-Stark", "weight": 11}, {"from": "Eddard-Stark", "label": 64, "to": "Catelyn-Stark", "weight": 64}, {"from": "Eddard-Stark", "label": 69, "to": "Cersei-Lannister", "weight": 69}, {"from": "Eddard-Stark", "label": 27, "to": "Jaime-Lannister", "weight": 27}, {"from": "Eddard-Stark", "label": 26, "to": "Joffrey-Baratheon", "weight": 26}, {"from": "Eddard-Stark", "label": 47, "to": "Jon-Arryn", "weight": 47}, {"from": "Eddard-Stark", "label": 32, "to": "Jory-Cassel", "weight": 32}, {"from": "Eddard-Stark", "label": 12, "to": "Loras-Tyrell", "weight": 12}, {"from": "Eddard-Stark", "label": 16, "to": "Luwin", "weight": 16}, {"from": "Eddard-Stark", "label": 19, "to": "Lyanna-Stark", "weight": 19}, {"from": "Eddard-Stark", "label": 12, "to": "Lysa-Arryn", "weight": 12}, {"from": "Eddard-Stark", "label": 11, "to": "Mordane", "weight": 11}, {"from": "Eddard-Stark", "label": 81, "to": "Petyr-Baelish", "weight": 81}, {"from": "Eddard-Stark", "label": 33, "to": "Pycelle", "weight": 33}, {"from": "Eddard-Stark", "label": 33, "to": "Renly-Baratheon", "weight": 33}, {"from": "Eddard-Stark", "label": 16, "to": "Robb-Stark", "weight": 16}, {"from": "Eddard-Stark", "label": 34, "to": "Sansa-Stark", "weight": 34}, {"from": "Eddard-Stark", "label": 18, "to": "Stannis-Baratheon", "weight": 18}, {"from": "Eddard-Stark", "label": 15, "to": "Tomard", "weight": 15}, {"from": "Eddard-Stark", "label": 21, "to": "Tyrion-Lannister", "weight": 21}, {"from": "Eddard-Stark", "label": 18, "to": "Tywin-Lannister", "weight": 18}, {"from": "Eddard-Stark", "label": 61, "to": "Varys", "weight": 61}, {"from": "Eddard-Stark", "label": 12, "to": "Vayon-Poole", "weight": 12}, {"from": "Arya-Stark", "label": 14, "to": "Bran-Stark", "weight": 14}, {"from": "Arya-Stark", "label": 12, "to": "Cersei-Lannister", "weight": 12}, {"from": "Arya-Stark", "label": 39, "to": "Joffrey-Baratheon", "weight": 39}, {"from": "Arya-Stark", "label": 12, "to": "Jory-Cassel", "weight": 12}, {"from": "Arya-Stark", "label": 39, "to": "Mordane", "weight": 39}, {"from": "Arya-Stark", "label": 18, "to": "Mycah", "weight": 18}, {"from": "Arya-Stark", "label": 13, "to": "Myrcella-Baratheon", "weight": 13}, {"from": "Arya-Stark", "label": 15, "to": "Robb-Stark", "weight": 15}, {"from": "Arya-Stark", "label": 104, "to": "Sansa-Stark", "weight": 104}, {"from": "Arya-Stark", "label": 20, "to": "Syrio-Forel", "weight": 20}, {"from": "Bran-Stark", "label": 18, "to": "Catelyn-Stark", "weight": 18}, {"from": "Bran-Stark", "label": 29, "to": "Hodor", "weight": 29}, {"from": "Bran-Stark", "label": 11, "to": "Jory-Cassel", "weight": 11}, {"from": "Bran-Stark", "label": 65, "to": "Luwin", "weight": 65}, {"from": "Bran-Stark", "label": 17, "to": "Nan", "weight": 17}, {"from": "Bran-Stark", "label": 12, "to": "Osha", "weight": 12}, {"from": "Bran-Stark", "label": 32, "to": "Rickon-Stark", "weight": 32}, {"from": "Bran-Stark", "label": 112, "to": "Robb-Stark", "weight": 112}, {"from": "Bran-Stark", "label": 23, "to": "Theon-Greyjoy", "weight": 23}, {"from": "Bran-Stark", "label": 31, "to": "Tyrion-Lannister", "weight": 31}, {"from": "Cersei-Lannister", "label": 12, "to": "Barristan-Selmy", "weight": 12}, {"from": "Cersei-Lannister", "label": 12, "to": "Catelyn-Stark", "weight": 12}, {"from": "Cersei-Lannister", "label": 16, "to": "Jaime-Lannister", "weight": 16}, {"from": "Cersei-Lannister", "label": 42, "to": "Joffrey-Baratheon", "weight": 42}, {"from": "Cersei-Lannister", "label": 13, "to": "Petyr-Baelish", "weight": 13}, {"from": "Cersei-Lannister", "label": 29, "to": "Sansa-Stark", "weight": 29}, {"from": "Cersei-Lannister", "label": 27, "to": "Tyrion-Lannister", "weight": 27}, {"from": "Cersei-Lannister", "label": 19, "to": "Varys", "weight": 19}, {"from": "Joffrey-Baratheon", "label": 12, "to": "Jaime-Lannister", "weight": 12}, {"from": "Joffrey-Baratheon", "label": 14, "to": "Mycah", "weight": 14}, {"from": "Joffrey-Baratheon", "label": 11, "to": "Petyr-Baelish", "weight": 11}, {"from": "Joffrey-Baratheon", "label": 19, "to": "Robb-Stark", "weight": 19}, {"from": "Joffrey-Baratheon", "label": 24, "to": "Sandor-Clegane", "weight": 24}, {"from": "Joffrey-Baratheon", "label": 87, "to": "Sansa-Stark", "weight": 87}, {"from": "Joffrey-Baratheon", "label": 13, "to": "Tyrion-Lannister", "weight": 13}, {"from": "Mordane", "label": 12, "to": "Myrcella-Baratheon", "weight": 12}, {"from": "Mordane", "label": 43, "to": "Sansa-Stark", "weight": 43}, {"from": "Robb-Stark", "label": 49, "to": "Catelyn-Stark", "weight": 49}, {"from": "Robb-Stark", "label": 13, "to": "Hallis-Mollen", "weight": 13}, {"from": "Robb-Stark", "label": 20, "to": "Luwin", "weight": 20}, {"from": "Robb-Stark", "label": 20, "to": "Rickon-Stark", "weight": 20}, {"from": "Robb-Stark", "label": 15, "to": "Rodrik-Cassel", "weight": 15}, {"from": "Robb-Stark", "label": 13, "to": "Sansa-Stark", "weight": 13}, {"from": "Robb-Stark", "label": 37, "to": "Theon-Greyjoy", "weight": 37}, {"from": "Robb-Stark", "label": 11, "to": "Tyrion-Lannister", "weight": 11}, {"from": "Sansa-Stark", "label": 27, "to": "Jeyne-Poole", "weight": 27}, {"from": "Sansa-Stark", "label": 14, "to": "Loras-Tyrell", "weight": 14}, {"from": "Sansa-Stark", "label": 23, "to": "Sandor-Clegane", "weight": 23}, {"from": "Barristan-Selmy", "label": 13, "to": "Renly-Baratheon", "weight": 13}, {"from": "Renly-Baratheon", "label": 12, "to": "Petyr-Baelish", "weight": 12}, {"from": "Renly-Baratheon", "label": 19, "to": "Stannis-Baratheon", "weight": 19}, {"from": "Catelyn-Stark", "label": 16, "to": "Brynden-Tully", "weight": 16}, {"from": "Catelyn-Stark", "label": 11, "to": "Jon-Arryn", "weight": 11}, {"from": "Catelyn-Stark", "label": 14, "to": "Luwin", "weight": 14}, {"from": "Catelyn-Stark", "label": 33, "to": "Lysa-Arryn", "weight": 33}, {"from": "Catelyn-Stark", "label": 22, "to": "Petyr-Baelish", "weight": 22}, {"from": "Catelyn-Stark", "label": 25, "to": "Rodrik-Cassel", "weight": 25}, {"from": "Catelyn-Stark", "label": 49, "to": "Tyrion-Lannister", "weight": 49}, {"from": "Catelyn-Stark", "label": 13, "to": "Walder-Frey", "weight": 13}, {"from": "Luwin", "label": 16, "to": "Osha", "weight": 16}, {"from": "Tyrion-Lannister", "label": 61, "to": "Bronn", "weight": 61}, {"from": "Tyrion-Lannister", "label": 36, "to": "Jaime-Lannister", "weight": 36}, {"from": "Tyrion-Lannister", "label": 15, "to": "Kevan-Lannister", "weight": 15}, {"from": "Tyrion-Lannister", "label": 25, "to": "Lysa-Arryn", "weight": 25}, {"from": "Tyrion-Lannister", "label": 20, "to": "Mord", "weight": 20}, {"from": "Tyrion-Lannister", "label": 11, "to": "Petyr-Baelish", "weight": 11}, {"from": "Tyrion-Lannister", "label": 12, "to": "Shae", "weight": 12}, {"from": "Tyrion-Lannister", "label": 17, "to": "Shagga", "weight": 17}, {"from": "Tyrion-Lannister", "label": 40, "to": "Tywin-Lannister", "weight": 40}, {"from": "Brandon-Stark", "label": 14, "to": "Petyr-Baelish", "weight": 14}, {"from": "Petyr-Baelish", "label": 14, "to": "Pycelle", "weight": 14}, {"from": "Petyr-Baelish", "label": 29, "to": "Varys", "weight": 29}, {"from": "Bronn", "label": 11, "to": "Vardis-Egen", "weight": 11}, {"from": "Jon-Arryn", "label": 12, "to": "Lysa-Arryn", "weight": 12}, {"from": "Jon-Arryn", "label": 11, "to": "Pycelle", "weight": 11}, {"from": "Jon-Arryn", "label": 13, "to": "Stannis-Baratheon", "weight": 13}, {"from": "Jaime-Lannister", "label": 12, "to": "Sandor-Clegane", "weight": 12}, {"from": "Jaime-Lannister", "label": 16, "to": "Tywin-Lannister", "weight": 16}, {"from": "Varys", "label": 17, "to": "Pycelle", "weight": 17}, {"from": "Doreah", "label": 14, "to": "Irri", "weight": 14}, {"from": "Doreah", "label": 11, "to": "Jhiqui", "weight": 11}, {"from": "Drogo", "label": 16, "to": "Illyrio-Mopatis", "weight": 16}, {"from": "Drogo", "label": 16, "to": "Jorah-Mormont", "weight": 16}, {"from": "Drogo", "label": 12, "to": "Mirri-Maz-Duur", "weight": 12}, {"from": "Drogo", "label": 11, "to": "Ogo", "weight": 11}, {"from": "Drogo", "label": 13, "to": "Qotho", "weight": 13}, {"from": "Drogo", "label": 19, "to": "Viserys-Targaryen", "weight": 19}, {"from": "Haggo", "label": 11, "to": "Qotho", "weight": 11}, {"from": "Illyrio-Mopatis", "label": 14, "to": "Viserys-Targaryen", "weight": 14}, {"from": "Irri", "label": 14, "to": "Jhiqui", "weight": 14}, {"from": "Jorah-Mormont", "label": 15, "to": "Viserys-Targaryen", "weight": 15}, {"from": "Gared", "label": 13, "to": "Waymar-Royce", "weight": 13}, {"from": "Gared", "label": 12, "to": "Will-(prologue)", "weight": 12}, {"from": "Waymar-Royce", "label": 18, "to": "Will-(prologue)", "weight": 18}, {"from": "Gregor-Clegane", "label": 11, "to": "Sandor-Clegane", "weight": 11}, {"from": "Grenn", "label": 27, "to": "Pypar", "weight": 27}, {"from": "Pypar", "label": 11, "to": "Samwell-Tarly", "weight": 11}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
