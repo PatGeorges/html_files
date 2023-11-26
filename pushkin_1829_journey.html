@@ -1,0 +1,70 @@
+<html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <script type="text/javascript" data-lets-plot-script="library" src="https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v4.1.0/js-package/distr/lets-plot.min.js"></script>
+   </head>
+   <body>
+          <div id="kKIeQg"></div>
+   <script type="text/javascript" data-lets-plot-script="plot">
+       var plotSpec={
+"data":{
+"dep_city":["Moscow","Oryol","Novocherkassk","Stavropol","Georgiyevsk","Vladikavkaz","Tiflis","Kars"],
+"arr_city":["Oryol","Novocherkassk","Stavropol","Georgiyevsk","Vladikavkaz","Tiflis","Kars","Erzurum"],
+"dep_lon":[37.618423,36.098689,40.110401,41.9734,43.4577689,44.66778,44.783333,43.09495],
+"arr_lon":[36.098689,40.110401,41.9734,43.4577689,44.66778,44.783333,43.09495,41.27694],
+"dep_lat":[55.751244,52.929697,47.414101,45.0428,44.1497667,43.03667,41.716667,40.60199],
+"arr_lat":[52.929697,47.414101,45.0428,44.1497667,43.03667,41.716667,40.60199,39.90861]
+},
+"mapping":{
+},
+"data_meta":{
+},
+"kind":"plot",
+"scales":[],
+"layers":[{
+"geom":"livemap",
+"mapping":{
+},
+"data_meta":{
+},
+"tiles":{
+"kind":"vector_lets_plot",
+"url":"wss://tiles.datalore.jetbrains.com",
+"theme":"color",
+"attribution":"Map: <a href=\"https://github.com/JetBrains/lets-plot\">© Lets-Plot</a>, map data: <a href=\"https://www.openstreetmap.org/copyright\">© OpenStreetMap contributors</a>."
+},
+"geocoding":{
+"url":"https://geo2.datalore.jetbrains.com/map_data/geocoding"
+},
+"const_size_zoomin":0.0,
+"data":{
+}
+},{
+"geom":"segment",
+"mapping":{
+"x":"dep_lon",
+"y":"dep_lat",
+"xend":"arr_lon",
+"yend":"arr_lat"
+},
+"tooltips":{
+"formats":[],
+"lines":["from @dep_city to @arr_city"]
+},
+"data_meta":{
+},
+"arrow":{
+"name":"arrow"
+},
+"size":1.0,
+"color":"#fc4e2a",
+"data":{
+}
+}],
+"metainfo_list":[]
+};
+       var plotContainer = document.getElementById("kKIeQg");
+       LetsPlot.buildPlotFromProcessedSpecs(plotSpec, -1, -1, plotContainer);
+   </script>
+   </body>
+</html>
