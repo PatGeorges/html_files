@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fbeedc;
+    }
+    .axis-label {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: white;
+      border: 1px solid gray;
+      padding: 5px;
+      font-size: 12px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <svg width="960" height="700"></svg>
+
+  <script>
+    const margin = {top: 60, right: 40, bottom: 80, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 700 - margin.top - margin.bottom;
+
+    const svg = d3.select("svg")
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const color = d3.scaleOrdinal()
+      .domain(["Africa", "Asia", "Europe", "North America", "Oceania", "South America"])
+      .range(["#4E79A7", "#F28E2B", "#59A14F", "#4E79ED", "#E15759", "#DA3EED"]);
+
+    const tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    d3.csv("https://raw.githubusercontent.com/PatGeorges/html_files/refs/heads/main/HDI_GDP_sample.csv").then(data => {
+      data.forEach(d => {
+        d.HDI = +d.HDI;
+        d.GDP_per_capita = +d.GDP_per_capita;
+        d.Population = +d.Population;
+      });
+
+      const x = d3.scaleLinear()
+          .domain([0.4, 1.0])
+          .range([0, width]);
+
+      const y = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.GDP_per_capita) * 1.05])
+          .range([height, 0]);
+
+      const radius = d3.scaleSqrt()
+          .domain([0, d3.max(data, d => d.Population)])
+          .range([2, 30]);
+
+      svg.append("g")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x));
+      svg.append("text")
+          .attr("class", "axis-label")
+          .attr("x", width / 2)
+          .attr("y", height + 50)
+          .text("Human Development Index");
+
+      svg.append("g")
+          .call(d3.axisLeft(y));
+      svg.append("text")
+          .attr("class", "axis-label")
+          .attr("transform", "rotate(-90)")
+          .attr("x", -height / 2)
+          .attr("y", -60)
+          .text("GDP per Capita (int-$ in 2021 prices)");
+
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", -20)
+          .attr("text-anchor", "middle")
+          .style("font-size", "24px")
+          .style("fill", "darkred")
+          .style("font-weight", "bold")
+          .text("Human Development Index vs. GDP per Capita —2023—");
+
+      svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+          .attr("cx", d => x(d.HDI))
+          .attr("cy", d => y(d.GDP_per_capita))
+          .attr("r", d => radius(d.Population))
+          .attr("fill", d => color(d.Region))
+          .attr("stroke", "black")
+          .attr("opacity", 0.8)
+          .on("mouseover", function(event, d) {
+              tooltip.transition().duration(200).style("opacity", .9);
+              tooltip.html(`${d.Country}<br>HDI: ${d.HDI}<br>GDP: $${d.GDP_per_capita.toLocaleString()}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 28) + "px");
+          })
+          .on("mouseout", function() {
+              tooltip.transition().duration(500).style("opacity", 0);
+          });
+
+      const regions = color.domain();
+      const legend = svg.selectAll(".legend")
+        .data(regions)
+        .enter().append("g")
+          .attr("transform", (d, i) => `translate(0, ${i * 20})`);
+
+      legend.append("rect")
+          .attr("x", width - 300)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", color);
+
+      legend.append("text")
+          .attr("x", width - 340)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(d => d);
+    });
+  </script>
+</body>
+</html>
